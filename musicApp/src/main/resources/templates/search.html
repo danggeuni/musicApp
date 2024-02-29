@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form method="post" th:action="@{/search}">
+
+    <label for="search"></label>
+    <input id="search" name="search" required>
+
+    <button type="submit">검색</button>
+
+</form>
+
+<div th:if="${artistResult == null}"></div>
+
+<!--가수 대략 설명-->
+<div th:unless="${artistResult == null}">
+    <img th:src="${artistResult.artists.items[0].images[1].url}" alt="/">
+    <div>
+        <h1 th:text="${artistResult.artists.items[0].name}"></h1>
+    </div>
+
+    <h3>장르</h3>
+    <ul>
+        <h3 th:each="genre : ${artistResult.artists.items[0].genres}" th:text="${genre}"></h3>
+    </ul>
+
+    <h3 th:text="'팔로워 수 : ' + ${#numbers.formatInteger(artistResult.artists.items[0].followers.total,3,'COMMA') + '명'}"></h3>
+</div>
+
+<!--앨범 대략 설명-->
+<div th:each="item : ${data}">
+    <div>
+        <a th:href="@{'/tracks/' + ${item.id}}">
+            <img th:src="${item.images[2].url}">
+        </a>
+        <span th:text="${item.name}"></span>
+        <span th:text="' / '"></span>
+        <span th:text="${item.releaseDate}"></span>
+    </div>
+</div>
+
+
+</body>
+</html>
