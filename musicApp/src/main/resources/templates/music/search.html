@@ -6,13 +6,24 @@
 </head>
 <body>
 
-<form method="post" th:action="@{/search}">
+<div th:if="${userId == null}">
+    <button th:text="로그인" th:onclick="|location.href='@{/user/login}'|"></button>
+    <button th:text="회원가입" th:onclick="|location.href='@{/user/register}'|"></button>
+</div>
 
+<div th:unless="${userId == null}">
+    <span th:text="'반갑습니다. ' + ${userId} + '님.'"></span>
+    <button th:onClick="|location.href='@{/user/logout}'|" th:text="로그아웃"></button>
+    <button th:onClick="|location.href='@{/music/favorite}'|" th:text="'내가 찜한 노래'"></button>
+</div>
+
+<button type="button" th:onclick="|location.href = '@{/music/main}'|">메인으로</button>
+
+<form method="post" th:action="@{/music/search}">
     <label for="search"></label>
     <input id="search" name="search" required>
 
     <button type="submit">검색</button>
-
 </form>
 
 <div th:if="${artistResult == null}"></div>
@@ -35,7 +46,7 @@
 <!--앨범 대략 설명-->
 <div th:each="item : ${data}">
     <div>
-        <a th:href="@{'/tracks/' + ${item.id}}">
+        <a th:href="@{'/music/tracks/' + ${item.id}}">
             <img th:src="${item.images[2].url}">
         </a>
         <span th:text="${item.name}"></span>
@@ -43,7 +54,6 @@
         <span th:text="${item.releaseDate}"></span>
     </div>
 </div>
-
 
 </body>
 </html>
