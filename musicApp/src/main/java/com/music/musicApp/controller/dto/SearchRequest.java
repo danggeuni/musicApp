@@ -1,4 +1,4 @@
-package com.music.musicApp.controller.dto.music;
+package com.music.musicApp.controller.dto;
 
 import lombok.Data;
 

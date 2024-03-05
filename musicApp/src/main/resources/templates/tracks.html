@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tracks</title>
+</head>
+<body>
+
+<button onclick="window.history.back()">< 뒤로가기</button>
+<div th:each="item : ${data}">
+    <div>
+        <h2 th:text="${item.name}"></h2>
+        <span th:text="'  '"></span>
+        <audio controls>
+            <source th:src="${item.previewUrl}" type="audio/mpeg">
+        </audio>
+
+        <form method="post">
+            <button type="submit"></button>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

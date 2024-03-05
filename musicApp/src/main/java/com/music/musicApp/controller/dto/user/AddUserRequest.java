@@ -5,11 +5,11 @@ import lombok.Data;
 
 @Data
 public class AddUserRequest {
-    private String userId;
+    private String email;
     private String name;
     private String password;
 
     public UserEntity toEntity() {
-        return new UserEntity(userId, name, password);
+        return new UserEntity(null, email, name, password);
     }
 }

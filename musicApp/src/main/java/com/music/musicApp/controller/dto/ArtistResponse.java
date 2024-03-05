@@ -1,33 +1,35 @@
-package com.music.musicApp.controller.dto.music;
+package com.music.musicApp.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class AlbumResponse {
-    private Albums albums;
-
+public class ArtistResponse {
+    private Artists artists;
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Albums {
+    public static class Artists {
         private List<Items> items;
 
         @Data
         @JsonIgnoreProperties(ignoreUnknown = true)
         public static class Items {
-            private String id;
+            private List<String> genres;
             private List<Images> images;
+            private Followers followers;
+            private String id;
             private String name;
-            @JsonProperty("release_date")
-            private String releaseDate;
-
             @Data
             @JsonIgnoreProperties(ignoreUnknown = true)
             public static class Images {
                 private String url;
+            }
+            @Data
+            @JsonIgnoreProperties(ignoreUnknown = true)
+            public static class Followers {
+                private int total;
             }
         }
     }

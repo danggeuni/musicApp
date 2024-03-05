@@ -1,4 +1,4 @@
-package com.music.musicApp.controller.dto.music;
+package com.music.musicApp.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,6 +18,5 @@ public class TracksResponse {
 
         @JsonProperty("preview_url")
         private String previewUrl;
-        private String id;
     }
 }

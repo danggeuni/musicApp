@@ -22,41 +22,44 @@ public class UserService {
         this.session = session;
     }
 
-//    추가 작업 필요
+    //    추가 작업 필요
     public void joinUser(AddUserRequest request, String checkPwd) {
-        UserEntity checkId = userRepository.findById(request.getUserId());
+        UserEntity checkId = userRepository.findByEmail(request.getEmail());
 
-        if(checkId != null) {
+        if (checkId != null) {
             throw new RuntimeException("이미 가입된 아이디염");
         }
 
         String originPwd = request.getPassword();
-        if(!originPwd.equals(checkPwd)) {
+        if (!originPwd.equals(checkPwd)) {
             throw new RuntimeException("비밀번호가 서로다름");
         }
 
-        // 암호화 및 entity 생성
+        // 암호화 및 entity 생성 (기존 코드)
         Encryption encryption = new Encryption();
         String encryptPwd = encryption.getEncrypt(request.getPassword(), encryption.salt);
-        UserEntity updateDate = new UserEntity(request.getUserId(), request.getName(), encryptPwd);
+        UserEntity updateDate = new UserEntity(null, request.getEmail(), request.getName(), encryptPwd);
 
         userRepository.joinUser(updateDate);
     }
 
     public void loginUser(LoginUserRequest request) {
-        UserEntity entity = userRepository.findById(request.getUserId());
+        UserEntity entity = userRepository.findByEmail(request.getEmail());
 
-        if(entity == null) {
+        if (entity == null) {
             throw new RuntimeException("가입된 정보가 없습니다.");
         }
 
-        Encryption encryption = new Encryption();
-        String encryptPwd = encryption.getEncrypt(request.getPassword(), encryption.salt);
+        // 기존 코드
+         Encryption encryption = new Encryption();
+         String encryptPwd = encryption.getEncrypt(request.getPassword(), encryption.salt);
 
-        if(!encryptPwd.equals(entity.getPassword())) {
+        if (!encryptPwd.equals(entity.getPassword())) {
             throw new RuntimeException("비밀번호가 다릅니다.");
         }
     }
 
-
+    public UserEntity findByEmail(String userId) {
+        return userRepository.findByEmail(userId);
+    }
 }

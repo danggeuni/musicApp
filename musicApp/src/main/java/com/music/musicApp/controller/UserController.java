@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public String joinUser(Model model, String checkPwd) {
+    public String signup(Model model, String checkPwd) {
         model.addAttribute("data", new AddUserRequest());
         model.addAttribute("checkPwd", checkPwd);
 
@@ -38,19 +38,19 @@ public class UserController {
     public String addUser(@ModelAttribute AddUserRequest request, String checkPwd) {
         userService.joinUser(request, checkPwd);
 
-        return "redirect:/user/login";
+        return "redirect:user/login";
     }
 
     @GetMapping("/login")
     public String loginUser(Model model) {
         model.addAttribute("data", new LoginUserRequest());
-        return "user/login";
+        return "/login";
     }
 
     @PostMapping("/login")
     public String checkLogin(@ModelAttribute LoginUserRequest request) {
         userService.loginUser(request);
-        session.setAttribute("userId", request.getUserId());
+        session.setAttribute("email", request.getEmail());
 
         return "redirect:/music/main";
     }
