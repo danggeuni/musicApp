@@ -1,6 +1,5 @@
 package com.music.musicApp.domain.repository;
 
-import com.music.musicApp.controller.dto.music.FavoriteResponse;
 import com.music.musicApp.domain.entity.FavoriteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

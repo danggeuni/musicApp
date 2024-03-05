@@ -96,5 +96,4 @@ public class SpotifyController {
 
         return "music/favorite";
     }
-
 }
