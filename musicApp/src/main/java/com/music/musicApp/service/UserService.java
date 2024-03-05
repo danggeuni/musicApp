@@ -58,5 +58,9 @@ public class UserService {
         }
     }
 
+    public UserEntity findById(String userId) {
+        return userRepository.findById(userId);
+    }
+
 
 }

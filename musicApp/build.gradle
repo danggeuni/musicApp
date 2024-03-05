@@ -50,6 +50,9 @@ dependencies {
 
 	// XML 문서 JAVA 객체 맵핑 자동화
 	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
+	// OAuth2 의존성
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
 
 tasks.named('test') {
