@@ -5,9 +5,7 @@ import com.music.musicApp.config.oauth.Oauth2UserCustomService;
 import com.music.musicApp.domain.repository.RefreshTokenRepository;
 import com.music.musicApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 
 @Configuration
 public class WebOAuthSecurityConfig {
@@ -22,11 +20,5 @@ public class WebOAuthSecurityConfig {
         this.tokenProvider = tokenProvider;
         this.refreshTokenRepository = refreshTokenRepository;
         this.userService = userService;
-    }
-
-    @Bean
-    public WebSecurityCustomizer configure() {
-        return (web) -> web.ignoring()
-                .requestMatchers("/img/**", "/css/**", "/js/**");
     }
 }

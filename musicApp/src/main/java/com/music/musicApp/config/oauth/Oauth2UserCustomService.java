@@ -33,7 +33,7 @@ public class Oauth2UserCustomService extends DefaultOAuth2UserService {
         Map<String, Object> attributes = oAuth2User.getAttributes();
         String userId = (String) attributes.get("userId");
         String name = (String) attributes.get("name");
-        UserEntity user = userRepository.findById(userId);
+        UserEntity user = userRepository.findByEmail(userId);
         return userRepository.joinUser(user);
     }
 }

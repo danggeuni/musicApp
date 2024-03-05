@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
@@ -26,31 +25,31 @@ public class UserController {
         this.session = session;
     }
 
-    @GetMapping("/register")
-    public String joinUser(Model model, String checkPwd) {
+    @GetMapping("/user")
+    public String signup(Model model, String checkPwd) {
         model.addAttribute("data", new AddUserRequest());
         model.addAttribute("checkPwd", checkPwd);
 
         return "user/register";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/user")
     public String addUser(@ModelAttribute AddUserRequest request, String checkPwd) {
         userService.joinUser(request, checkPwd);
 
-        return "redirect:/user/login";
+        return "redirect:/login";
     }
 
     @GetMapping("/login")
     public String loginUser(Model model) {
         model.addAttribute("data", new LoginUserRequest());
-        return "user/login";
+        return "/login";
     }
 
     @PostMapping("/login")
     public String checkLogin(@ModelAttribute LoginUserRequest request) {
         userService.loginUser(request);
-        session.setAttribute("userId", request.getUserId());
+        session.setAttribute("email", request.getEmail());
 
         return "redirect:/music/main";
     }

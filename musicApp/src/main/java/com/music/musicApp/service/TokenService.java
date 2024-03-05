@@ -27,7 +27,7 @@ public class TokenService {
         }
 
         String userId = refreshTokenService.findByRefreshToken(refreshToken).getUserId();
-        UserEntity user = userService.findById(userId);
+        UserEntity user = userService.findByEmail(userId);
 
         return tokenProvider.generateToken(user, Duration.ofHours(2));
     }
