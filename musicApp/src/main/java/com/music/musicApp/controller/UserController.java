@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
@@ -25,7 +26,7 @@ public class UserController {
         this.session = session;
     }
 
-    @GetMapping("/user")
+    @GetMapping("/register")
     public String signup(Model model, String checkPwd) {
         model.addAttribute("data", new AddUserRequest());
         model.addAttribute("checkPwd", checkPwd);
@@ -33,11 +34,11 @@ public class UserController {
         return "user/register";
     }
 
-    @PostMapping("/user")
+    @PostMapping("/register")
     public String addUser(@ModelAttribute AddUserRequest request, String checkPwd) {
         userService.joinUser(request, checkPwd);
 
-        return "redirect:/login";
+        return "redirect:user/login";
     }
 
     @GetMapping("/login")
