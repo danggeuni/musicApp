@@ -37,6 +37,12 @@ dependencies {
 	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 }
 
 tasks.named('test') {
