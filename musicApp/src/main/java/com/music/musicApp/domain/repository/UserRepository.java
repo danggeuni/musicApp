@@ -18,21 +18,21 @@ public class UserRepository {
     }
 
     public UserEntity joinUser(UserEntity entity) {
-        jdbcTemplate.update("INSERT INTO USERS (USERID, NAME, PASSWORD) VALUES (?, ?, ?)",
-                entity.getUserId(), entity.getName(), entity.getPassword());
+        jdbcTemplate.update("INSERT INTO USERS (EMAIL, NAME, PASSWORD) VALUES (?, ?, ?)",
+                entity.getEmail(), entity.getName(), entity.getPassword());
 
         return entity;
     }
 
-    public UserEntity findById(String userId){
+    public UserEntity findByEmail(String email) {
         try {
-        return jdbcTemplate.queryForObject("SELECT * FROM USERS WHERE USERID = ?", new Object[]{userId},userEntityRowMapper());
+            return jdbcTemplate.queryForObject("SELECT * FROM USERS WHERE EMAIL = ?", new Object[]{email}, userEntityRowMapper());
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
 
-    RowMapper<UserEntity> userEntityRowMapper () {
-        return (rs, rowNum) -> new UserEntity(rs.getString("USERID"), rs.getString("NAME"), rs.getNString("PASSWORD"));
+    RowMapper<UserEntity> userEntityRowMapper() {
+        return (rs, rowNum) -> new UserEntity(rs.getLong("ID"), rs.getString("EMAIL"), rs.getString("NAME"), rs.getNString("PASSWORD"));
     }
 }
