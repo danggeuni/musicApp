@@ -13,13 +13,11 @@ spring:
 
 oauth2:
   user:
-    google:
       client-id: 1005699460275-5lj3s3e6bemht5tks42l96qiv7stts51.apps.googleusercontent.com
       client-secret: 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
       redirect-uri: http://localhost:6080/login/oauth2/code/google
 
   provider:
-    google:
       token-uri: https://www.googleapis.com/oauth2/v4/token
       user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
 
