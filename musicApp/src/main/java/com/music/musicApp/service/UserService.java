@@ -22,16 +22,16 @@ public class UserService {
         this.session = session;
     }
 
-//    추가 작업 필요
+    //    추가 작업 필요
     public void joinUser(AddUserRequest request, String checkPwd) {
         UserEntity checkId = userRepository.findById(request.getUserId());
 
-        if(checkId != null) {
+        if (checkId != null) {
             throw new RuntimeException("이미 가입된 아이디염");
         }
 
         String originPwd = request.getPassword();
-        if(!originPwd.equals(checkPwd)) {
+        if (!originPwd.equals(checkPwd)) {
             throw new RuntimeException("비밀번호가 서로다름");
         }
 
@@ -46,16 +46,20 @@ public class UserService {
     public void loginUser(LoginUserRequest request) {
         UserEntity entity = userRepository.findById(request.getUserId());
 
-        if(entity == null) {
+        if (entity == null) {
             throw new RuntimeException("가입된 정보가 없습니다.");
         }
 
         Encryption encryption = new Encryption();
         String encryptPwd = encryption.getEncrypt(request.getPassword(), encryption.salt);
 
-        if(!encryptPwd.equals(entity.getPassword())) {
+        if (!encryptPwd.equals(entity.getPassword())) {
             throw new RuntimeException("비밀번호가 다릅니다.");
         }
+    }
+
+    public UserEntity findById(String id) {
+        return userRepository.findById(id);
     }
 
 

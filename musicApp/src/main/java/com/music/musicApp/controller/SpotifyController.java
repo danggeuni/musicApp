@@ -58,7 +58,12 @@ public class SpotifyController {
     @GetMapping("/tracks/{albumId}")
     public String showTracks(Model model, @PathVariable String albumId) {
         TracksResponse response = spotifyService.showTracks(albumId);
-        String userId = session.getAttribute("userId").toString();
+
+        String userId = null;
+        if (session.getAttribute("userId") != null) {
+            userId = session.getAttribute("userId").toString();
+        }
+
         List<TracksResponse.Items> data = response.getItems();
 
         model.addAttribute("data", data);
@@ -69,7 +74,6 @@ public class SpotifyController {
         List<FavoriteResponse> trackId = spotifyService.findFavorite(userId).stream()
                 .map(FavoriteResponse::new)
                 .collect(Collectors.toList());
-
         model.addAttribute("trackId", trackId);
 
         return "music/tracks";
@@ -85,7 +89,7 @@ public class SpotifyController {
     }
 
     @GetMapping("/favorite")
-    public String myFavorite(Model model){
+    public String myFavorite(Model model) {
         String userId = session.getAttribute("userId").toString();
         model.addAttribute("userId", userId);
 

@@ -24,15 +24,15 @@ public class UserRepository {
         return entity;
     }
 
-    public UserEntity findById(String userId){
+    public UserEntity findById(String userId) {
         try {
-        return jdbcTemplate.queryForObject("SELECT * FROM USERS WHERE USERID = ?", new Object[]{userId},userEntityRowMapper());
+            return jdbcTemplate.queryForObject("SELECT * FROM USERS WHERE USERID = ?", new Object[]{userId}, userEntityRowMapper());
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
 
-    RowMapper<UserEntity> userEntityRowMapper () {
+    RowMapper<UserEntity> userEntityRowMapper() {
         return (rs, rowNum) -> new UserEntity(rs.getString("USERID"), rs.getString("NAME"), rs.getNString("PASSWORD"));
     }
 }

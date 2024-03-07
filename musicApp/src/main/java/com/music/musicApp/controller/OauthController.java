@@ -4,32 +4,31 @@ package com.music.musicApp.controller;
 import com.music.musicApp.controller.dto.oauth.OauthToken;
 import com.music.musicApp.controller.dto.oauth.OauthUser;
 import com.music.musicApp.controller.dto.user.AddUserRequest;
-import com.music.musicApp.domain.entity.UserEntity;
 import com.music.musicApp.service.OauthService;
 import com.music.musicApp.service.UserService;
-import com.music.musicApp.utils.Encryption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 @Controller
 public class OauthController {
     private final OauthService oauthService;
     private final UserService userService;
+    private final HttpSession session;
 
     @Autowired
-    public OauthController(OauthService oauthService, UserService userService) {
+    public OauthController(OauthService oauthService, UserService userService, HttpSession session) {
         this.oauthService = oauthService;
         this.userService = userService;
+        this.session = session;
     }
 
     @GetMapping("/auth/kakao/callback{code}")
-    @ResponseBody
     public String kakaoCallback(Model model, @RequestParam String code) {
         OauthToken data = oauthService.getToken(code);
         OauthUser user = oauthService.getData(data);
@@ -41,8 +40,11 @@ public class OauthController {
         addUserRequest.setName(user.getProperties().getNickname());
         addUserRequest.setPassword(randomPwd);
 
-        userService.joinUser(addUserRequest, addUserRequest.getPassword());
+        if (userService.findById(addUserRequest.getUserId()) == null) {
+            userService.joinUser(addUserRequest, addUserRequest.getPassword());
+        }
 
+        session.setAttribute("userId", addUserRequest.getUserId());
         return "redirect:/music/main";
     }
 }

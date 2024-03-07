@@ -8,6 +8,7 @@
 
 <div th:if="${userId == null}">
     <button th:text="로그인" th:onclick="|location.href='@{/user/login}'|"></button>
+    <button th:text="카카오로그인" th:onclick="|location.href='@{https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=26207dd989945bf3f623cd138fa235f8&redirect_uri=http://localhost:6080/auth/kakao/callback}'|"></button>
     <button th:text="회원가입" th:onclick="|location.href='@{/user/register}'|"></button>
 </div>
 
