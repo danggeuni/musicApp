@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.music.musicApp.controller.dto.oauth.OauthToken;
 import com.music.musicApp.controller.dto.oauth.OauthUser;
+import com.music.musicApp.domain.entity.UserEntity;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -18,7 +19,7 @@ public class OauthService {
 
     String CONTENT_TYPE = "application/x-www-form-urlencoded;charset=utf-8";
     String CLIENT_ID = "26207dd989945bf3f623cd138fa235f8";
-    String REDIRECT_URI = "http://localhost:6080/auth/kakao/callback";
+    String REDIRECT_URI = "http://localhost:8080/auth/kakao/callback";
     String GET_ACCESS_TOKEN_URI = "https://kauth.kakao.com/oauth/token";
     String GET_USER_DATA_ACCESS_URI = "https://kapi.kakao.com/v2/user/me";
 
@@ -43,9 +44,8 @@ public class OauthService {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        OauthToken data;
         try {
-            return data = mapper.readValue(response.getBody(), OauthToken.class);
+            return mapper.readValue(response.getBody(), OauthToken.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("무언가가 잘못되었다!", e);
         }

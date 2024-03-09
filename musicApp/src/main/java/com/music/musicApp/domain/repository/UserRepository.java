@@ -18,8 +18,8 @@ public class UserRepository {
     }
 
     public UserEntity joinUser(UserEntity entity) {
-        jdbcTemplate.update("INSERT INTO USERS (USERID, NAME, PASSWORD) VALUES (?, ?, ?)",
-                entity.getUserId(), entity.getName(), entity.getPassword());
+        jdbcTemplate.update("INSERT INTO USERS (USERID, NAME, PASSWORD, TOKEN) VALUES (?, ?, ?, ?)",
+                entity.getUserId(), entity.getName(), entity.getPassword(), entity.getToken());
 
         return entity;
     }
@@ -33,6 +33,6 @@ public class UserRepository {
     }
 
     RowMapper<UserEntity> userEntityRowMapper() {
-        return (rs, rowNum) -> new UserEntity(rs.getString("USERID"), rs.getString("NAME"), rs.getNString("PASSWORD"));
+        return (rs, rowNum) -> new UserEntity(rs.getString("USERID"), rs.getString("NAME"), rs.getString("PASSWORD"), rs.getString("TOKEN"));
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
@@ -35,16 +36,17 @@ public class OauthController {
 
         String randomPwd = UUID.randomUUID().toString();
 
-        AddUserRequest addUserRequest = new AddUserRequest();
-        addUserRequest.setUserId(user.getId());
-        addUserRequest.setName(user.getProperties().getNickname());
-        addUserRequest.setPassword(randomPwd);
+        AddUserRequest kakaoUser = new AddUserRequest();
+        kakaoUser.setUserId(user.getId());
+        kakaoUser.setName(user.getProperties().getNickname());
+        kakaoUser.setPassword(randomPwd);
+        kakaoUser.setToken(data.getAccessToken());
 
-        if (userService.findById(addUserRequest.getUserId()) == null) {
-            userService.joinUser(addUserRequest, addUserRequest.getPassword());
+        if (userService.findById(kakaoUser.getUserId()) == null) {
+            userService.joinUser(kakaoUser, kakaoUser.getPassword());
         }
 
-        session.setAttribute("userId", addUserRequest.getUserId());
+        session.setAttribute("userId", kakaoUser.getUserId());
         return "redirect:/music/main";
     }
 }

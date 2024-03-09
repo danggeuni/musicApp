@@ -6,7 +6,14 @@ import com.music.musicApp.domain.entity.UserEntity;
 import com.music.musicApp.domain.repository.UserRepository;
 import com.music.musicApp.utils.Encryption;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpSession;
 
@@ -38,7 +45,7 @@ public class UserService {
         // 암호화 및 entity 생성
         Encryption encryption = new Encryption();
         String encryptPwd = encryption.getEncrypt(request.getPassword(), encryption.salt);
-        UserEntity updateDate = new UserEntity(request.getUserId(), request.getName(), encryptPwd);
+        UserEntity updateDate = new UserEntity(request.getUserId(), request.getName(), encryptPwd, request.getToken());
 
         userRepository.joinUser(updateDate);
     }
@@ -61,6 +68,4 @@ public class UserService {
     public UserEntity findById(String id) {
         return userRepository.findById(id);
     }
-
-
 }

@@ -2,6 +2,8 @@ package com.music.musicApp.controller;
 
 import com.music.musicApp.controller.dto.user.AddUserRequest;
 import com.music.musicApp.controller.dto.user.LoginUserRequest;
+import com.music.musicApp.domain.entity.UserEntity;
+import com.music.musicApp.service.OauthService;
 import com.music.musicApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +23,7 @@ public class UserController {
     private final HttpSession session;
 
     @Autowired
-    public UserController(UserService userService, HttpSession session) {
+    public UserController(UserService userService, OauthService oauthService, HttpSession session) {
         this.userService = userService;
         this.session = session;
     }
@@ -60,5 +62,4 @@ public class UserController {
         session.invalidate();
         return "redirect:/music/main";
     }
-
 }
